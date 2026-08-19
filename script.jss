@@ -1,137 +1,62 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Rolagem suave para os links da navegação
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
 
-// ==============================
-// AGRINHO - SCRIPT.JS
-// ==============================
-
-// Aguarda o carregamento da página
-document.addEventListener("DOMContentLoaded", () => {
-
-    // ===== MENU MOBILE =====
-
-    const menu = document.querySelector("nav ul");
-    const header = document.querySelector("header");
-
-    // Cria botão do menu caso exista uma navegação
-    if (menu && header) {
-        const menuButton = document.createElement("button");
-
-        menuButton.innerHTML = "☰";
-        menuButton.classList.add("menu-button");
-
-        menuButton.style.display = "none";
-        menuButton.style.background = "none";
-        menuButton.style.border = "none";
-        menuButton.style.color = "white";
-        menuButton.style.fontSize = "28px";
-        menuButton.style.cursor = "pointer";
-
-        header.insertBefore(menuButton, menu);
-
-        menuButton.addEventListener("click", () => {
-            menu.classList.toggle("menu-aberto");
-        });
-
-        // Fecha o menu ao clicar em um link
-        const links = menu.querySelectorAll("a");
-
-        links.forEach(link => {
-            link.addEventListener("click", () => {
-                menu.classList.remove("menu-aberto");
-            });
-        });
-
-        // Exibe o botão somente em telas pequenas
-        function verificarTela() {
-            if (window.innerWidth <= 768) {
-                menuButton.style.display = "block";
-            } else {
-                menuButton.style.display = "none";
-                menu.classList.remove("menu-aberto");
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
-        }
-
-        verificarTela();
-        window.addEventListener("resize", verificarTela);
-    }
-
-
-    // ===== ANIMAÇÃO AO ROLAR =====
-
-    const elementos = document.querySelectorAll(".card, section");
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visivel");
-                }
-            });
-        },
-        {
-            threshold: 0.15
-        }
-    );
-
-    elementos.forEach(elemento => {
-        elemento.style.opacity = "0";
-        elemento.style.transform = "translateY(30px)";
-        elemento.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-
-        observer.observe(elemento);
-    });
-
-
-    // ===== BOTÃO VOLTAR AO TOPO =====
-
-    const topo = document.createElement("button");
-
-    topo.innerHTML = "↑";
-    topo.title = "Voltar ao topo";
-
-    topo.style.position = "fixed";
-    topo.style.bottom = "25px";
-    topo.style.right = "25px";
-    topo.style.width = "45px";
-    topo.style.height = "45px";
-    topo.style.border = "none";
-    topo.style.borderRadius = "50%";
-    topo.style.backgroundColor = "#2e7d32";
-    topo.style.color = "white";
-    topo.style.fontSize = "22px";
-    topo.style.cursor = "pointer";
-    topo.style.display = "none";
-    topo.style.zIndex = "999";
-
-    document.body.appendChild(topo);
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            topo.style.display = "block";
-        } else {
-            topo.style.display = "none";
-        }
-    });
-
-    topo.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
         });
     });
 
+    // 2. Animação de entrada nas seções ao rolar a página
+    const observerOptions = {
+        threshold: 0.15
+    };
 
-    // ===== ANIMAÇÃO DOS CARDS =====
-
-    document.querySelectorAll(".card").forEach(card => {
-
-        card.addEventListener("mouseenter", () => {
-            card.style.transform = "translateY(-10px) scale(1.02)";
+    const revealOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
         });
+    }, observerOptions);
 
-        card.addEventListener("mouseleave", () => {
-            card.style.transform = "translateY(0) scale(1)";
-        });
-
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        revealOnScroll.observe(card);
     });
 
+    // 3. Destacar o link do menu de acordo com a seção visível
+    window.addEventListener('scroll', () => {
+        let currentSection = '';
+        const sections = document.querySelectorAll('section');
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.color = 'white';
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.style.color = '#a5d6a7';
+            }
+        });
+    });
 });
