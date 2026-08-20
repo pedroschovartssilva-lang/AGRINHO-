@@ -1,62 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Rolagem suave para os links da navegação
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            const targetId = link.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
+    // 1. Menu Mobile (Hamburguer)
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
 
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
         });
-    });
 
-    // 2. Animação de entrada nas seções ao rolar a página
+        // Fechar o menu ao clicar em qualquer link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    }
+
+    // 2. Animação de entrada nos elementos ao rolar a página (Scroll Reveal)
     const observerOptions = {
-        threshold: 0.15
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     };
 
-    const revealOnScroll = new IntersectionObserver((entries, observer) => {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('reveal-visible');
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        revealOnScroll.observe(card);
+    // Seleciona cartões e seções para aplicar o efeito
+    const elementsToAnimate = document.querySelectorAll('.card, .hero-content, .cta-box');
+    elementsToAnimate.forEach(el => {
+        el.classList.add('reveal-hidden');
+        revealObserver.observe(el);
     });
 
-    // 3. Destacar o link do menu de acordo com a seção visível
+    // 3. Efeito no Header ao rolar a página
+    const header = document.querySelector('.header');
     window.addEventListener('scroll', () => {
-        let currentSection = '';
-        const sections = document.querySelectorAll('section');
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            if (window.scrollY >= sectionTop) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.style.color = 'white';
-            if (link.getAttribute('href') === `#${currentSection}`) {
-                link.style.color = '#a5d6a7';
-            }
-        });
+        if (window.scrollY > 30) {
+            header?.classList.add('header-scrolled');
+        } else {
+            header?.classList.remove('header-scrolled');
+        }
     });
 });
