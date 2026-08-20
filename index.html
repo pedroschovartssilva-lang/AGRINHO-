@@ -3,113 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Agrinho</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f4f9f4;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: #2e7d32;
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        nav {
-            background-color: #1b5e20;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 0.8rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #a5d6a7;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        .card h2 {
-            color: #2e7d32;
-            margin-bottom: 1rem;
-        }
-
-        footer {
-            background-color: #2e7d32;
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
-        }
-    </style>
+    <title>Agrinho | Início</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Projeto Agrinho</h1>
-        <p>Sustentabilidade, Campo e Cidadania</p>
+    <!-- Cabeçalho & Navegação -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🌾</span>
+                <span class="logo-text">Agrinho</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link active">Início</a>
+                <a href="sobre.html" class="nav-link">Sobre</a>
+                <a href="projetos.html" class="nav-link">Projetos</a>
+                <a href="contato.html" class="nav-link btn-nav">Contato</a>
+            </nav>
+        </div>
     </header>
 
-    <nav>
-        <a href="#sobre">Sobre</a>
-        <a href="#projetos">Projetos</a>
-        <a href="#contato">Contato</a>
-    </nav>
+    <!-- Seção Hero (Banner Principal) -->
+    <section class="hero">
+        <div class="container hero-content">
+            <span class="badge">Sustentabilidade & Educação</span>
+            <h1 class="hero-title">Conectando o Campo ao Futuro da Educação</h1>
+            <p class="hero-subtitle">Cultivando saberes, preservando o meio ambiente e transformando comunidades através de ações educativas conscientes.</p>
+            <div class="hero-buttons">
+                <a href="projetos.html" class="btn btn-primary">Conheça os Projetos</a>
+                <a href="sobre.html" class="btn btn-outline">Saiba Mais</a>
+            </div>
+        </div>
+    </section>
 
-    <div class="container">
-        <section id="sobre" class="card">
-            <h2>Sobre o Agrinho</h2>
-            <p>O Programa Agrinho busca promover ações de educação ambiental, cidadania e desenvolvimento sustentável, conectando temas do campo com o dia a dia da comunidade escolar.</p>
-        </section>
+    <!-- Seção Destaques (Features) -->
+    <section class="features">
+        <div class="container grid-3">
+            <div class="card feature-card">
+                <div class="icon-wrapper">🌱</div>
+                <h3>Educação Ambiental</h3>
+                <p>Projetos focados no uso consciente dos recursos naturais e preservação dos ecossistemas.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="icon-wrapper">🚜</div>
+                <h3>Valorização do Campo</h3>
+                <p>Reconhecimento do trabalho rural e sua importância fundamental para a sociedade.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="icon-wrapper">🤝</div>
+                <h3>Cidadania & Ética</h3>
+                <p>Incentivo à responsabilidade social e formação de jovens conscientes e transformadores.</p>
+            </div>
+        </div>
+    </section>
 
-        <section id="projetos" class="card">
-            <h2>Nossas Iniciativas</h2>
-            <p>Desenvolvemos atividades práticas, pesquisas e projetos focados na preservação do meio ambiente, uso consciente da água e valorização do trabalho no campo.</p>
-        </section>
+    <!-- Seção Chamada de Ação -->
+    <section class="cta-section">
+        <div class="container cta-box">
+            <h2>Quer fazer parte dessa transformação?</h2>
+            <p>Descubra como sua escola ou comunidade pode se engajar nas iniciativas do Agrinho.</p>
+            <a href="contato.html" class="btn btn-primary">Fale Conosco</a>
+        </div>
+    </section>
 
-        <section id="contato" class="card">
-            <h2>Contato</h2>
-            <p>Entre em contato conosco para saber mais sobre os trabalhos desenvolvidos ou para colaborar com a iniciativa.</p>
-        </section>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Projeto Agrinho. Todos os direitos reservados.</p>
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Projeto Agrinho. Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <a href="sobre.html">Sobre</a>
+                <a href="projetos.html">Projetos</a>
+                <a href="contato.html">Contato</a>
+            </div>
+        </div>
     </footer>
 
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
